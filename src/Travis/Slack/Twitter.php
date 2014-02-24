@@ -65,7 +65,7 @@ class Twitter {
             foreach ($statuses as $status)
             {
                 // vars
-                $handle = ex($status, 'user.screen_name', '_');
+                $handle = strtolower(ex($status, 'user.screen_name', '_'));
                 $link = static::filter('https://twitter.com/'.$handle.'/status/'.ex($status, 'id'));
                 $date = ex($status, 'created_at');
 
