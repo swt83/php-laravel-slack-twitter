@@ -24,7 +24,10 @@ class Twitter {
         $results = \Cache::remember('slack_twitter_'.$hash, 5, function() use($hash, $input)
         {
             // run
-            return \Twitter::getSearch($input);
+            $results = \Twitter::getSearch($input);
+
+            // return
+            return $results;
         });
 
         // name
@@ -52,15 +55,23 @@ class Twitter {
         $feed->link = static::filter(\URL::current().'?'.http_build_query(\Input::all()));
         $feed->lang = 'en';
 
-        // foreach result...
-        foreach (ex($results, 'statuses', array()) as $status)
-        {
-            // vars
-            $link = static::filter('https://twitter.com/_/status/'.ex($status, 'id'));
-            $date = ex($status, 'created_at');
+        // get statuses
+        $statuses = ex($results, 'statuses', array());
 
-            // add to feed
-            $feed->add(null, null, $link, $date, null); // title, author, link, date, description
+        // if results...
+        if ($statuses)
+        {
+            // foreach result...
+            foreach ($statuses as $status)
+            {
+                // vars
+                $handle = ex($status, 'user.screen_name', '_');
+                $link = static::filter('https://twitter.com/'.$handle.'/status/'.ex($status, 'id'));
+                $date = ex($status, 'created_at');
+
+                // add to feed
+                $feed->add(null, null, $link, $date, null); // title, author, link, date, description
+            }
         }
 
         // return
