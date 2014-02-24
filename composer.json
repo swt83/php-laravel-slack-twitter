@@ -21,10 +21,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/swt83/php-ex.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/swt83/php-date.git"
         }
     ],
     "require": {
@@ -32,8 +28,7 @@
         "illuminate/support": "4.1.*",
         "thujohn/twitter": "*",
         "roumen/feed": "*",
-        "travis/ex": "*",
-        "travis/date": "*"
+        "travis/ex": "*"
     },
     "autoload": {
         "psr-0": {
