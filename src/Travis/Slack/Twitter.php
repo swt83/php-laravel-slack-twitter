@@ -2,6 +2,8 @@
 
 namespace Travis\Slack;
 
+use Travis\Date;
+
 class Twitter {
 
     /**
@@ -48,7 +50,7 @@ class Twitter {
 
         // set title
         $feed->title = 'twitter ['.strtolower($name).']';
-        $feed->pubdate = time();
+        $feed->pubdate = Date::forge()->format('%D, %d %M %Y %H:%i:%s %O');
         $feed->lang = 'en';
 
         // foreach result...

@@ -35,4 +35,10 @@ Currently only supporting the search feature:
 http://<YOURDOMAIN>/slack/twitter/search?q=<YOURQUERY>
 ```
 
+Add a ``name=<YOURNAME>`` parameter to the search query to name the RSS feed as it appears in your Slack feed..
+
 Will cache results for 5 minutes.
+
+## Notes
+
+Don't forget to check your feeds w/ Twitter to make sure they are realtime and not "best results".
