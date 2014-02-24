@@ -8,7 +8,7 @@ Normal install via Composer.
 
 ### Providers
 
-Register the service provider in your ``app/config/app.php`` file:
+Register the service providers in your ``app/config/app.php`` file:
 
 ```php
 'Thujohn\Twitter\TwitterServiceProvider',
