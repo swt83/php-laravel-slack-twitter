@@ -18,10 +18,10 @@ class Twitter {
         if (!$input) trigger_error('No input.');
 
         // hash
-        $hash = 'slack_twitter_'.md5(serialize($input));
+        $hash = md5(serialize($input));
 
         // load from cache...
-        $results = \Cache::remember($hash, 5, function() use($hash, $input)
+        $results = \Cache::remember('slack_twitter_'.$hash, 5, function() use($hash, $input)
         {
             // run
             return \Twitter::getSearch($input);
@@ -48,6 +48,7 @@ class Twitter {
 
         // set title
         $feed->title = 'twitter ['.strtolower($name).']';
+        $feed->description = '';
         $feed->lang = 'en';
 
         // foreach result...
