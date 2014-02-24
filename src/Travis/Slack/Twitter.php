@@ -2,8 +2,6 @@
 
 namespace Travis\Slack;
 
-use Travis\Date;
-
 class Twitter {
 
     /**
