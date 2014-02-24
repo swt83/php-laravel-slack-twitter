@@ -48,14 +48,15 @@ class Twitter {
 
         // set title
         $feed->title = 'twitter ['.strtolower($name).']';
-        $feed->description = '';
+        $feed->description = $feed->title;
+        $feed->link = static::filter(\URL::current().'?'.http_build_query(\Input::all()));
         $feed->lang = 'en';
 
         // foreach result...
         foreach (ex($results, 'statuses', array()) as $status)
         {
             // vars
-            $link = 'https://twitter.com/_/status/'.ex($status, 'id');
+            $link = static::filter('https://twitter.com/_/status/'.ex($status, 'id'));
             $date = ex($status, 'created_at');
 
             // add to feed
@@ -64,6 +65,26 @@ class Twitter {
 
         // return
         return $feed->render('atom');
+    }
+
+    /**
+     * Return a filtered URL string.
+     *
+     * @param   string  $string
+     * @return  string
+     */
+    protected static function filter($string)
+    {
+        // make filter
+        $filters = array();
+        $filters['&'] = '&amp;';
+
+        // search and replace
+        $find = array_keys($filters);
+        $replace = array_values($filters);
+
+        // run
+        return str_ireplace($find, $replace, $string);
     }
 
 }
