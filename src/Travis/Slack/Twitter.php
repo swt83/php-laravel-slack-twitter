@@ -23,18 +23,21 @@ class Twitter {
         // load from cache...
         $results = \Cache::remember('slack_twitter_'.$hash, 5, function() use($hash, $input)
         {
-            // run
-            $results = \Twitter::getSearch($input);
+            // fetch
+            $tweets = \Twitter::getSearch($input);
+
+            // name
+            $name = \Input::get('name', $hash);
+
+            // build
+            $rss = \Travis\Slack\Twitter::to_rss($name, $tweets);
 
             // return
-            return $results;
+            return $rss->getOriginalContent()->render();
         });
 
-        // name
-        $name = ex($input, 'name', $hash);
-
         // return
-        return static::to_rss($name, $results);
+        return \Response::make($results)->header('Content-Type', 'application/rss+xml');
     }
 
     /**
