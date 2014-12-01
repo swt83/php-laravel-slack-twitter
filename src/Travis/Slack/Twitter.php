@@ -55,7 +55,7 @@ class Twitter {
         // set title
         $feed->title = 'twitter ['.strtolower($name).']';
         $feed->description = $feed->title;
-        $feed->link = static::filter(\URL::current().'?'.http_build_query(\Input::all()));
+        $feed->link = \URL::current().'?'.http_build_query(\Input::all(), '', '&amp;');
         $feed->lang = 'en';
 
         // get statuses
@@ -69,36 +69,17 @@ class Twitter {
             {
                 // vars
                 $handle = strtolower(ex($status, 'user.screen_name', '_'));
-                $link = static::filter('https://twitter.com/'.$handle.'/status/'.ex($status, 'id'));
+                $link = 'https://twitter.com/'.$handle.'/status/'.ex($status, 'id');
                 $date = ex($status, 'created_at');
+                $description = ex($status, 'text');
 
                 // add to feed
-                $feed->add(null, null, $link, $date, null); // title, author, link, date, description
+                $feed->add($handle, null, $link, $date, $description); // title, author, link, date, description
             }
         }
 
         // return
         return $feed->render('atom');
-    }
-
-    /**
-     * Return a filtered URL string.
-     *
-     * @param   string  $string
-     * @return  string
-     */
-    protected static function filter($string)
-    {
-        // make filter
-        $filters = array();
-        $filters['&'] = '&amp;';
-
-        // search and replace
-        $find = array_keys($filters);
-        $replace = array_values($filters);
-
-        // run
-        return str_ireplace($find, $replace, $string);
     }
 
 }

@@ -32,7 +32,7 @@ Copy the ``Thujohn\Twitter`` vendor config file to ``app/config/packages/thujohn
 Currently only supporting the search feature:
 
 ```
-http://<YOURDOMAIN>/slack/twitter/search?q=<YOURQUERY>
+http://<YOURDOMAIN>/slack/twitter/search?q=<YOURQUERY>&f=realtime
 ```
 
 Add a ``name=<YOURNAME>`` parameter to the query to name the RSS feed as it appears in Slack.
